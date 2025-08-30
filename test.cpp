@@ -278,11 +278,11 @@ std::string ReadResponse(const RiRiResponseContainer& container) {
 
 int main() {
     // Example usage
-    std::vector<RapidNode> nodeArray = {
+    constexpr std::vector<RapidNode> nodeArray = {
         {"key1", "val1"}, {"key2", 123}, {"key3", 1.23}, {"key4", true}, {"key1", "duplicate"},
         {"key2", "val5"}, {"key3", 456}, {"key4", 7.89}, {"key5", false}, {"key6", "meh"}
     };
-    std::span<RapidNode> nodes(nodeArray);
+    constexpr std::span<RapidNode> nodes(nodeArray);
 
 
     // std::chrono::steady_clock::time_point startFull = std::chrono::steady_clock::now();
@@ -312,45 +312,45 @@ int main() {
     // std::cout << "\nElapsed time for response: " << elapsed.count() << " ms\n\n";
 
 
-using Clock = std::chrono::steady_clock;
-using duration = std::chrono::duration<double, std::milli>;    
-constexpr int ITERATIONS = 100000;
-double totalFast = 0, totalFull = 0, totalFast2 = 0, totalFast3 = 0;
+// using Clock = std::chrono::steady_clock;
+// using duration = std::chrono::duration<double, std::milli>;    
+// constexpr int ITERATIONS = 100000;
+// double totalFast = 0, totalFull = 0, totalFast2 = 0, totalFast3 = 0;
 
-for (int i = 0; i < ITERATIONS; ++i) {
-    MemoryMap.clear();
+// for (int i = 0; i < ITERATIONS; ++i) {
+    // MemoryMap.clear();
 
-    auto t1 = Clock::now();
+    // auto t1 = Clock::now();
     auto r1 = setCommand(nodes);
-    auto t2 = Clock::now();
-    totalFast += std::chrono::duration_cast<duration>(t2 - t1).count();
+    // auto t2 = Clock::now();
+    // totalFast += std::chrono::duration_cast<duration>(t2 - t1).count();
 
-    MemoryMap.clear();
+    // MemoryMap.clear();
 
-    auto t3 = Clock::now();
-    auto r2 = setCommand(nodes, FullResponseTag);
-    auto t4 = Clock::now();
-    totalFull += std::chrono::duration_cast<duration>(t4 - t3).count();
+    // auto t3 = Clock::now();
+    // auto r2 = setCommand(nodes, FullResponseTag);
+    // auto t4 = Clock::now();
+    // totalFull += std::chrono::duration_cast<duration>(t4 - t3).count();
 
-    MemoryMap.clear(); // Clear the map for the next iteration
+    // MemoryMap.clear(); // Clear the map for the next iteration
 
-    auto t5 = Clock::now();
-    auto r3 = setCommand2(nodes);
-    auto t6 = Clock::now();
-    totalFast2 += std::chrono::duration_cast<duration>(t6 - t5).count();
+    // auto t5 = Clock::now();
+    // auto r3 = setCommand2(nodes);
+    // auto t6 = Clock::now();
+    // totalFast2 += std::chrono::duration_cast<duration>(t6 - t5).count();
 
-    MemoryMap.clear(); // Clear the map for the next iteration
+    // MemoryMap.clear(); // Clear the map for the next iteration
 
-    auto t7 = Clock::now();
-    auto r4 = setCommand3(nodes);
-    auto t8 = Clock::now();
-    totalFast3 += std::chrono::duration_cast<duration>(t8 - t7).count();
+    // auto t7 = Clock::now();
+    // auto r4 = setCommand3(nodes);
+    // auto t8 = Clock::now();
+    // totalFast3 += std::chrono::duration_cast<duration>(t8 - t7).count();
 }
 
-std::cout << "Fast avg: " << (totalFast / ITERATIONS) << " ms\n";
-std::cout << "Full avg: " << (totalFull / ITERATIONS) << " ms\n";
-std::cout << "Fast2 avg: " << (totalFast2 / ITERATIONS) << " ms\n";
-std::cout << "Fast3 avg: " << (totalFast3 / ITERATIONS) << " ms\n";
+// std::cout << "Fast avg: " << (totalFast / ITERATIONS) << " ms\n";
+// std::cout << "Full avg: " << (totalFull / ITERATIONS) << " ms\n";
+// std::cout << "Fast2 avg: " << (totalFast2 / ITERATIONS) << " ms\n";
+// std::cout << "Fast3 avg: " << (totalFast3 / ITERATIONS) << " ms\n";
 
     return 0;
 }
