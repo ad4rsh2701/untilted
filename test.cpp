@@ -10,7 +10,7 @@
 #include <span>
 #include <variant>
 #include <chrono>
-#include "../src/core/ankerl/unordered_dense.h"
+#include "unordered_dense.h"
 
 using RapidDataType = std::variant<std::string, int_fast64_t, double, bool>;
 
